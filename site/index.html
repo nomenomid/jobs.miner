@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jobs Miner</title>
+        <link rel = "stylesheet" href = "./css/bootstrap.min.css" media = "all" />
+        <link rel = "stylesheet" href = "./css/stickyFooter.css" media = "all" />
+        <link rel = "stylesheet" href = "./css/jobs.miner.css" media = "all" />
+        <script type = "text/javascript" data-main = "js/config" src = "js/lib/require.js"></script>
+    </head>
+    <body ng-controller = "MainCtrl">
+        <div ng-class = "{show: showOccupationForm}" ng-include = "'./views/occupationForm.html'" id = "occupation-definition"></div>
+        <div ng-class = "{show: modal}" ng-include = "'./views/processingModal.html'" id = "processing-modal"></div>
+        <form novalidate name = "mainForm" id = "miner" class = "container">
+            <div class = "page-header">
+                <h1 class = "text-center">Jobs Miner</h1>
+            </div>
+            <div class = "row">
+                <div id = "occupations-wrapper" class = "col-sm-offset-1 col-sm-4">
+                    <button class = "btn btn-sm btn-block btn-default" ng-click = "displayOccupationForm(true)"><span class = "glyphicon glyphicon-plus"></span> Occupation definition</button>
+                    <div id = "occupations">
+                        <table class = "ng-cloak">
+                            <tr ng-repeat = "occupation in search.occupations">
+                                <td>{{occupation.name}}</td>
+                                <td>
+                                    <button class = "btn btn-sm btn-danger glyphicon glyphicon-remove-circle" ng-click = "removeOccupation($index)"></button>
+                                    <button class = "btn btn-sm btn-warning glyphicon glyphicon-edit" ng-click = "editOccupation($index)"></button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id = "other-options" class = "col-sm-offset-1 col-sm-5 form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">zip codes:</span>
+                        <input required 
+                               type="text" 
+                               class="form-control" 
+                               ng-model = "search.l" 
+                               id = "zipCodes" 
+                               ng-list
+                               ng-pattern = "/^\d{5}\s*(?:,\s*\d{5}\s*)*$/"
+                               placeholder="type zip codes separated by commas">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">zip radius:</span>
+                        <select class = "form-control" 
+                                id = "zipRadius" 
+                                ng-model = "search.radius"
+                                ng-options = "radius.value as (radius.name + ' miles') for radius in zipRadii"></select>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">job type:</span>
+                        <select class = "form-control" 
+                                id = "jobTypes" 
+                                required 
+                                multiple 
+                                ng-model = "search.jt"
+                                ng-options = "jobType.value as jobType.name for jobType in jobTypes"></select>
+                    </div>
+                    <div class = "input-group">
+                        <span class = "input-group-addon">salaries:</span>
+                        <input required 
+                               type = "text" 
+                               class = "form-control" 
+                               id = "salaries"
+                               ng-model = "search.salary"
+                               ng-list
+                               salary-groups
+                               placeholder = "type salary groups separated by commas"/>
+                    </div>
+                    <div class = "input-group">
+                        <span class = "input-group-addon">posted within:</span>
+                        <select class = "form-control" 
+                                id = "postedWithin"
+                                ng-model = "search.fromage"
+                                ng-options = "lookBack.value as (lookBack.name + ' days') for lookBack in lookBacks"></select>
+                    </div>
+                    <div class = "input-group">
+                        <span class = "input-group-addon"># of records:</span>
+                        <input class = "form-control" 
+                               required
+                               type = "text" 
+                               id = "numberOfRecords" 
+                               ng-model = "search.numberOfRecords"
+                               ng-list
+                               ng-pattern = "/^\d+%?$/"
+                               placeholder = "specify a % of the total (25%) or a number (100)" />
+                    </div>
+                    <div class = "input-group">
+                        <span class = "input-group-addon">Order by:</span>
+                        <select class = "form-control" 
+                                id = "orderBy" 
+                                ng-model = "search.sort"
+                                ng-options = "sort.value as sort.name for sort in sorts"></select>
+
+                    </div>
+                </div>
+            </div>
+            <div id = "action-buttons" class = "row">
+                <div class = "col-sm-12 text-center">
+                    <button class = "btn btn-default" 
+                            ng-disabled = "mainForm.$invalid || search.occupations.length === 0"
+                            ng-click = "saveSearchSpecs()">Save</button>
+                    <button class = "btn btn-success" 
+                            ng-disabled = "mainForm.$invalid || search.occupations.length === 0" 
+                            ng-click = "generateData()">Build dataset</button>
+                </div>
+            </div>
+        </form>
+        <footer class = "footer">
+            <div class = "container">
+                <div class = "text-center text-muted" id = "copyright">&copy; 2015 &nbsp;Dmitriy A. Nesterkin, Ph.D.</div>
+            </div>
+        </footer>
+    </body>
+</html>

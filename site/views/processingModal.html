@@ -1,0 +1,6 @@
+<div class = "modalContent">
+    <p id = "processingMessage" ng-show = "processing" ng-class = "{complete: complete}"><span>...</span></p>
+    <p id = "downloadLink">
+        <a href = "/file/{{dataFile}}" ng-click = "downloadFile()" ng-show = "download" target = "_blank">Download file</a>
+    </p>
+</div>
