@@ -1,3 +1,7 @@
+#processing-modal a:hover {
+    text-decoration: none;
+}
+
 @keyframes hide-border {
     0% {border-color: rgb(204, 204, 204)}
     99.9% {border-color: rgb(204, 204, 204)}
