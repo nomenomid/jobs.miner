@@ -1,1 +1,1 @@
-{"occupations":[{"name":"software engineer","allWords":"","titleWords":"software engineer"}],"radius":30,"fromage":100,"sort":"relevance","l":["10001"],"jt":["fulltime"],"salary":["0"],"numberOfRecords":["10"]}
+{"occupations":[{"name":"front-end developer","allWords":"html css javascript","exactPhrase":"front end"},{"name":"software engineer","titleWords":"software engineer"}],"radius":30,"fromage":100,"sort":"relevance","l":["10001"],"jt":["fulltime"],"salary":["0"],"numberOfRecords":["10"]}
