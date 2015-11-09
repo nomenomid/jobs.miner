@@ -4,7 +4,7 @@ define(["angular", "app/constants", "jquery"], function() {
     var controllers = angular.module("controllers", ["constants"]);
     controllers.controller("MainCtrl", mainCtrl);
     
-    function mainCtrl($scope, $http, $timeout, SPECS, BUILD) {
+    function mainCtrl($scope, $http, $timeout, SPECS, BUILD, dropdownData) {
         $http.get(SPECS)
              .then(function(specs) {
                  processSpecs(specs.data);
@@ -30,35 +30,10 @@ define(["angular", "app/constants", "jquery"], function() {
             $scope.download = false;
             $scope.complete = false;
             
-            $scope.zipRadii = [
-                {value: 5, name: 5},
-                {value: 10, name: 10},
-                {value: 15, name: 15},
-                {value: 20, name: 20},
-                {value: 30, name: 30}
-            ];
-            
-            $scope.jobTypes = [
-                {value: "fulltime", name: "Full-time"},
-                {value: "parttime", name: "Part-time"},
-                {value: "internship", name: "Internship"},
-                {value: "commission", name: "Commission"},
-                {value: "contract", name: "Contract"},
-                {value: "temporary", name: "Temporary"}
-            ];
-            
-            $scope.lookBacks = [
-                {value: 5, name: 5},
-                {value: 10, name: 10},
-                {value: 15, name: 15},
-                {value: 30, name: 30},
-                {value: 100, name: 100}
-            ];
-            
-            $scope.sorts = [
-                {value: "date", name: "date"},
-                {value: "relevance", name: "relevance"}
-            ];
+            $scope.zipRadii = dropdownData.zipRadii;
+            $scope.jobTypes = dropdownData.jobTypes;
+            $scope.lookBacks = dropdownData.lookBacks;
+            $scope.sorts = dropdownData.sorts;
             
             if(typeof $scope.search.occupations === "undefined") {
                 $scope.search.occupations = [];
@@ -70,6 +45,7 @@ define(["angular", "app/constants", "jquery"], function() {
             $scope.displayOccupationForm = function(display) {
                 $scope.showOccupationForm = display;
                 $scope.edit = false;
+                $scope.occupation = {};
             };
             
             $scope.saveOccupation = function() {
@@ -96,7 +72,7 @@ define(["angular", "app/constants", "jquery"], function() {
                         numComplete++;
                     }
                 }
-                
+
                 return numComplete > 1 ? false : true;
             };
             
@@ -105,6 +81,7 @@ define(["angular", "app/constants", "jquery"], function() {
                 $scope.edit = true;
                 $scope.currentIndex = index;
                 $scope.occupation = angular.copy($scope.search.occupations[index]);
+                console.log($scope.occupation);
             };
                 
                 function processing() {
