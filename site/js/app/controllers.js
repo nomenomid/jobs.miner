@@ -81,7 +81,6 @@ define(["angular", "app/constants", "jquery"], function() {
                 $scope.edit = true;
                 $scope.currentIndex = index;
                 $scope.occupation = angular.copy($scope.search.occupations[index]);
-                console.log($scope.occupation);
             };
                 
                 function processing() {
