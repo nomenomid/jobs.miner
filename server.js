@@ -36,8 +36,8 @@ app.post("/specs", function(request, response) {
 
 app.post("/build", function(request, response) {
     saveData(request.body)
-        .then(jobsApiManager.buildDataset, console.log)
-        .then(response.send.bind(response), console.log);
+        .then(jobsApiManager.buildDataset)
+        .then(response.send.bind(response));
 });
 
 app.listen(port, function() {
